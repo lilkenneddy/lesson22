@@ -7,18 +7,33 @@ import static org.junit.jupiter.api.Assertions.*;
 class CarTest {
 
     @Test
-    void schoulDoDrive() {
-        // given
+    public void shouldDrive() {
+        //given
         Car car = new Car();
-
-        // when
+        //when
         boolean canDrive = car.canDrive();
+        //then
+        assertEquals(false, canDrive);
+    }
 
+    @Test
+    public void ShouldIsAllowedToDrive() {
+        //given
+        Car car = new Car();
+        //when
+        boolean IsAllowedToDrive = car.isAllowedToDrive();
+        //then
+        assertEquals(true, IsAllowedToDrive);
+    }
+
+
+    @Test
+    public void shouldDoMaxDistance() {
+        //given
+        Car car = new Car();
+        //when
+        double maxDistance = car.maxDistance();
         // then
-        assertEquals("canDrive");
+        assertEquals(0.0, maxDistance, 0.001);
     }
-
-    private void assertEquals(String canDrive) {
-    }
-
 }

@@ -1,41 +1,35 @@
 package org.example;
 
-import lombok.*; // добавив lombok
 import java.time.LocalDate;
 
-    //lombok застосовано
-    @Getter
-    @Setter
-    @NoArgsConstructor
-    @AllArgsConstructor
-    @ToString
-    @Data
+public class Car {
+    private double fuel;
+    private double fuelPer100Km;
+    private LocalDate nextTuev;
 
-//створив конструктор
-    public class Car {
-        public short canDrive;
-        private double fuelLevel;               // Поточний рівень пального (л)
-        private final double tankCapacity = 60; // Ємність бака (л)
-        private double fuelConsumptionPer100km; // Витрата палива (л на 100 км)
-        private LocalDate nextTuev;             // Дата останнього техогляду
-
-        public Car(int i, double v, LocalDate of) {
-        }
-
-        // 1. Чи може їхати (бак не порожній)
-        public boolean canDrive() {
-            return fuelLevel > 0;
-        }
-
-        // 2. Чи допущена до експлуатації (техогляд актуальний)
-        public boolean isAllowedToDrive() {
-            return nextTuev.isAfter(LocalDate.now()) || nextTuev.isEqual(LocalDate.now());
-        }
-
-        // 3. Скільки може проїхати (виходячи з рівня пального)
-        public double maxDistance() {
-            return (fuelLevel / fuelConsumptionPer100km) * 100;
-        }
-
+    public Car(double fuel, double fuelPer100Km, LocalDate nextTuev) {
+        this.fuel = fuel;
+        this.fuelPer100Km = fuelPer100Km;
+        this.nextTuev = nextTuev;
     }
 
+    // Конструктор без параметрів — для тестів або коли не хочеш одразу задавати значення
+    public Car() {
+        this.fuel = 0;
+        this.fuelPer100Km = 0;
+        this.nextTuev = LocalDate.now().plusYears(1);
+    }
+
+    public boolean canDrive() {
+        return fuel > 0;
+    }
+
+    public boolean isAllowedToDrive() {
+        return nextTuev != null && nextTuev.isAfter(LocalDate.now());
+    }
+
+    public double maxDistance() {
+        if (fuelPer100Km == 0) return 0;
+        return (fuel / fuelPer100Km) * 100;
+    }
+}
